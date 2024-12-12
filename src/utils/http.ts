@@ -23,9 +23,7 @@ httpInstance.interceptors.request.use(
 httpInstance.interceptors.response.use(
   (response) => {
     // 2xx 范围的状态码都会触发该函数。
-    const { data } = response
-    // 直接返回服务端的真实数据
-    return data
+    return response
   },
   (error) => {
     // 超出 2xx 范围的状态码都会触发该函数。

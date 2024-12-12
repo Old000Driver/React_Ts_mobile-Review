@@ -1,5 +1,39 @@
-const Home = () => {
-  return <div>this is Home</div>;
-};
+import { useEffect, useState } from 'react'
+import { Tabs } from 'antd-mobile'
+import './style.css'
+import { fetchChannelAPI } from '@/apis/list'
+import type { ChannelItem } from '@/apis/list'
 
-export default Home;
+const Home = () => {
+  const [channels, setChannels] = useState<ChannelItem[]>([])
+  useEffect(() => {
+    const getChannels = async () => {
+      try {
+        const res = await fetchChannelAPI()
+        console.log(res);
+        if (res.data.message === 'OK') {
+          console.log('12324124',res.data.data.channels);
+          setChannels(res.data.data.channels)
+        }
+      } catch (error) {
+        throw new Error('获取频道列表失败')
+      }
+    }
+    getChannels()
+  }, [])
+  return (
+    <div>
+      <div className="tabContainer">
+        <Tabs>
+          {channels.map((item) => (
+            <Tabs.Tab title={item.name} key={item.id}>
+              {item.name}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+      </div>
+    </div>
+  )
+}
+
+export default Home

@@ -3,4 +3,9 @@ type ResType<T> = {
   data: T;
 };
 
-export type {ResType}
+type ChannelItem = {
+  id: number;
+  name: string;
+};
+
+export type { ResType, ChannelItem };
